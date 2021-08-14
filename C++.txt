@@ -1,0 +1,234 @@
+//C++
+
+/*
+Complexity of std::sort : nlogn
+
+*/
+
+
+//----------------------------------------------------------------------
+//Vector
+////////////////////////////////////////
+// - Vectors are implemented as dynamic arrays, 
+// - unlike arrays, vectors don't have a fixed size, as they are allocated heap memory
+// - For arrays allocated through heap memory, they need to deallocated explicitly; for vectors you don't have to.
+
+std::vector<std::int> a;
+a.size(); // gives the length of the vector.
+a.push_back(1); // adds the int 1 to the end of the vector.
+i = a.begin(); // i is the position of the first element of a
+j = a.end(); // pos of last element of a
+
+std::int b = a[0];
+sort(a.begin(), a.end());
+
+// create a vector of repeated elements
+std::vector<std::int> c(5, 1); // creates a vector of 5 ones.
+
+
+//----------------------------------------------------------------------
+//std::map
+////////////////////////////////////////
+std::map<std::string, std::int> m; // like Python dict, but forces all keys to be of same type, and all values to be of same type.
+m["abc"] = 2;
+
+// check if key is in map
+it = m.find("abc"); // find returns an iterator. 
+// if key is not in the map, the iterator will be m.end().
+if (m.find("abc") != m.end()){
+    std::cout << "'abc' is in m" << std::endl;
+}
+
+// loop through a map
+for (auto item:m){
+	std::cout << "Key: " << item.first << std::endl;
+	std::cout << "Value: " << item.second << std::endl;
+}
+
+// The auto keyword specifies that the type of the variable that is being declared will be automatically deducted from its initializer.
+
+
+//----------------------------------------------------------------------
+//std::string
+////////////////////////////////////////
+std::string s = "Hello there";
+
+std::int l = s.length();
+
+// substring
+std::string sub = s.substr(2, 5); // "llo t"
+// substr takes in 2 arguments: idx to start extracting substr, and number of chars to extract.
+
+//sort char in a string
+sort(s.begin(), s.end()); // sort in place
+
+std::char i = s[0]; // indexing a string gives a char instead of a string.
+
+
+// compare two strings
+std::string b = "blah";
+std::int i = b.compare(s); // comparing b against s
+// returns 0 if b == s, >0 if b > s, <0 if b < s.
+// upper case is considered smaller than lower case, i.e. "S" < "s".
+
+
+//----------------------------------------------------------------------
+//std::stack (LILO)
+////////////////////////////////////////
+std::stack<int> st1;
+std::cout << st1.top() << std::endl; // -1
+// the top of a stack is default as -1. So to check if stack is empty, can check is st.top() == -1.
+// Might not be useful to do that is your stack is used to store other types.
+// A trick: add something to the stack first to indicate bottom of stack, for example an empty string for string stacks.
+
+// add things to stack
+st1.push(1);
+
+// remove things from stack
+st1.pop(); // remove st.top() from the stack.
+// Note that unlike pop() in python, in C++ it returns nothing.
+// So do auto i = st.top(); st.pop(); if you want that.
+
+
+//----------------------------------------------------------------------
+//std::queue (LIFO)
+////////////////////////////////////////
+std::queue<int> que1;
+std::cout << que1.front() << std::endl; // first element in queue.
+std::cout << que1.back() << std::endl; // last element in queue.
+
+que1.push_back(1); // add element to end.
+que1.pop_front(); // remove the first element
+
+
+//----------------------------------------------------------------------
+// Member Access Control
+////////////////////////////////////////
+// Access specifiers: Public, Private, Protected.
+
+/*
+Private: Can only be used by member functions and friends of class.
+			Derived classes can't access it either.
+
+Public: Can be used by any function.
+
+Protected: Can be used by member functions, friends of class, and 
+			classes derived from this class.
+
+By default, if you don't specify for your members, it will be 
+	private for classes, and public for structs.
+	
+
+In derived classes:
+--------------------
+While inheriting/deriving from a base class, you would specify the
+	access specifier while declaring the base class. 
+	(Note that if you don't, it defaults to "private" for class 
+	and "public" for struct.)
+
+		class BaseClass {};
+		
+		class DerivedClass1 : Public BaseClass {}; 
+		class DerivedClass2 : Private BaseClass {}; 
+			// or class DerivedClass2 : BaseClass {};
+		class DerivedClass3 : Protected BaseClass {};
+	
+The access specifier would decide the access to the inherited members 
+	in the derived class.
+	
+	Public declaration of base:
+		Base Members:
+		- Public -> Public
+		- Private -> inaccessible
+		- Protected -> Protected.
+		
+	Private declaration of base:
+		Base members:
+		- Public -> Private
+		- Private -> inaccessible
+		- Protected -> Private
+		
+	Protected declaration of base:
+		Base members:
+		- Public -> Protected
+		- Private -> inaccessible
+		- Protected -> Protected
+		
+		
+Static members
+----------------
+Recall that a static member variable is one where all objects of the 
+	class share the same copy. A static member function is one that uses
+	static variables.
+
+Declaring private and protected base classes for derived classes affect
+	only non-static members.
+
+*/
+
+
+//----------------------------------------------------------------------
+// Function pointers
+////////////////////////////////////////
+/*
+Function names are treated by the compiler as a pointer. So you can pass in function names into another function as a pointer.
+Eg.
+
+	float f_1(float x){
+	    return (x - x*x);
+	}
+
+	float f_2( float (*f)(float), float x ){
+	    return f(x);
+	}
+
+	int main() {
+
+	    cout << f_2(f_1, 10.0);
+	    return 0;
+	}
+
+Note how f_1 is passed in as a pointer. within f_2, f_1 is used normally.
+*/
+
+
+//----------------------------------------------------------------------
+Dynamic memory allocation
+////////////////////////////////////////
+/*
+malloc, realloc, free
+
+	void *p = malloc(10); // allocates 10 bytes memory. p is the pointer to the first byte.
+	
+By default, malloc returns a (void *) type.
+If for some reason the allocation fails (for eg not enough memory), then p = NULL. (a null pointer)
+So it is good practice to check if p is a null pointer before moving ahead.
+
+Say, for some reason you want to reallocate a different amount of memory, then 
+	
+	void *np = realloc(p, 20); // reallocates 20 bytes memory. The original 10 byte data will take up the first 10 bytes of the new memory.
+	
+By default, realloc also returns a (void *) type.
+After reallocation, p will be useless. This is called a dangling pointer.
+It is good practice to set it to null. (p = NULL;)
+Similarly, np could be NULL if the reallocation fails.
+
+In the end, when you don't need those memory anymore, free them
+
+	free(np); np = NULL;
+
+!!Note that only pointers created using malloc should be used with realloc and free, or undefined behaviour may happen.
+	
+Now, practically, you would want a useful pointer, so (void *) is not really a useful type. We can cast the output of malloc and realloc to other types.
+For eg.
+
+	int *q = (int *)malloc(sizeof(int)*10); // allocates 10 ints worth of memory, and casts the pointer to (int *) type.
+	int *nq = (int *)realloc(q, sizeof(int)*8); // reallocates 8 ints worth of memory and casts the pointer to (int *) type.
+	// Note that in this case, the last two integers in the original memory will be lost as the reallocated memory is smaller.
+	q = NULL;
+	free(nq);
+	nq = NULL;
+	
+*/
+
+

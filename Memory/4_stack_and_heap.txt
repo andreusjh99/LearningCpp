@@ -1,0 +1,85 @@
+4. Stack and heap
+
+Memory that a program uses is typically divided into a few different areas:
+- The code segment (or the text segment)
+    where the compiled program sits in memory. Typically read-only.
+- The bss segment (or the uninitialised data segment)
+    where zero-initialised global and static variables are stored.
+- The data segment (or the initialised data segment)
+    where (non-zero) initialised global and static variables are stored.
+- The heap
+    where dynamically allocated variables are allocated from.
+- The call stack
+    where function parameters, local variables, and other func-related info are stored.
+
+The heap segment
+==========================
+Keeps track of memory dynamically allocated.
+This can be allocated from the "new" keyword or "malloc"
+
+When a dynamically-allocated variable is "deleted" or "freed", the memory is "returned" to the heap.
+The address can then be reassigned for future allocation requests.
+! Deleting a pointer does not delete the variable, but it does render the variable useless.
+
+Advantages and disadvantages:
+-------------------------------
+- Allocating memory on the heap is comparatively slow.
+- Allocated memory stays allocated until specifically deallocated or program ends.
+- Dynamically-allocated memory needs to be accessed through a pointer, but dereferencing a pointer
+    is slower than accessing the variable directly.
+- Heap is a big pool of memory, so large arrays, structures or classes can be allcoated here.
+
+
+The call stack
+==================
+Keeps track of all the active functions from the start of program to the current point of execution,
+    handles allocation of func params and local variables.
+
+When the application starts: 
+1. the main() function is pushed onto the call stack by the OS. 
+2. The program then begins executing.
+3. When a function call is encountered, the function is pushed onto the call stack as a stack frame (more on this).
+4. When the current function ends, the function is popped off the call stack.
+
+By looking at the call stack, we can then see all the functions that were called and still active
+    up to the point of execution.
+
+Stack frame: Keeps track of all of the data associated with the function call.
+    This includes:
+    - address of instruction betong the function call - the return address
+        This is the address of the instruction for the CPU to go back to after the function call exits.
+    - all function arguments
+    - memory for local variables
+    - saved copies of any registers modified during the function call that needs to be restored when the function call exits.
+The stack frame is constructed when a function call is encountered and pushed onto the stack.
+
+In detail, when a function call takes place:
+1. Stack frame is constructed and pushed onto the stack.
+2. CPU jumps to the function's start point (the instruction address for the call/routine)
+3. Instructions inside func begin executing.
+4. Function call is done and is now terminated.
+5. Registers are restored from the call stack.
+6. Stack frame is popped off the stack => frees memories for local variables and arguments
+7. Return value from function (if any) is handled.
+8. CPU jumps back to the return address and continue execution of other instructions.
+
+Stack Overflow
+----------------
+Stack has a limited size. In a Windows machine, the default size is 1 MB.
+In a Linux machine, typically 8 Mb.
+In Linux, can find out in terminal:
+    ulimit -a | grep stack
+
+If program tries to put too much info on the stack, stack overflow will result.
+This means all the memory in stack has been allocated and 
+    further allocation begins overflowing into other sections of memory.
+Generally resulted from allocating too many variables (such as a huge array)
+    or too many nested function calls.
+A modern OS will typically issue an access violation and terminate the program when this happens.
+
+Advantages and disadvantages:
+---------------------------------
+- Allocating memory on stack is relatively fast.
+- All memory allocated on stack is known at compile time. 
+    => The memory can be accessed directly through a variable.
+- Stack is relatively small, so not a good idea to do anything that eats up lots of stack space.
