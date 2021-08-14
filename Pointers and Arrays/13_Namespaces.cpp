@@ -1,6 +1,6 @@
 /* 13. Namespaces
 c++ doesnt allow the same class names to be used twice.
-Usually we wouldn't want that either.
+Usually we wouldn't want that either, and so we will avoid using the same name.
 But say if we are using a third-party library and we want to use a class 'year' from the library,
 if we already define a "year" variable somewhere earlier in the code,
 we won't be able to use that class from the third-party library.
@@ -14,6 +14,7 @@ This way c++ will know which namespace each 'year' class is using.
 
 By using different namespaces, you are able to use the same name for different classes.
 
+By default, any classes or functions we create are defined under the global namespace.
 How do you create a new namespace?
 	namespace blah {
 
@@ -29,7 +30,7 @@ You could specify which namespace you are using in the source code by including
 or you could specify it right before the variable you created using the namespace.
 	blah::Cat cat;
 
-**If you have Cat in both std namespace and blah namespace and you include both
+!!If you have Cat in both std namespace and blah namespace and you include both
 	using namespace std;
 	using namespace blah;
 statements, then C++ will still not know what namespace Cat is using.
@@ -37,7 +38,7 @@ So the ideal way will be to specify it right before the variable.
 	blah::Cat cat1;
 	std::Cat cat2;
 
-**NOTE!!! This doesn't allow you to use the same variable name for both Cat objects 
+NOTE!!! This doesn't allow you to use the same variable name for both Cat objects 
 despite them being from diff namespaces
 */
 
@@ -49,7 +50,8 @@ despite them being from diff namespaces
 using namespace std;
 using namespace cat1;
 
-int main() {
+int main()
+{
 
 	//either you include the namespace above,
 	Cat cat_1("Meredith");

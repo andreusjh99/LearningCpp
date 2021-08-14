@@ -1,4 +1,5 @@
-Compiler and linker
+[Compiler and linker]
+---------------------------
 
 First, compile.
 The C++ compiler goes through each source code (.cpp) file
@@ -29,3 +30,21 @@ The linker now kicks in. It does three things:
 
 Once the linker finishes linking all the object files and libraries,
     you will have an executable file that you can then run.
+
+
+[Preprocessor]
+------------------
+When you compile your code, the code file actually goes through a phase
+    known as "translation" prior to compilation.
+The most noteworthy of the translation phases involve the "preprocessor"
+
+The preprocessor scans through the code file from top to bottom
+    looking for "preprocessor directives".
+    They are instructions that start with a "#" symbol and ends with a newline (with no semicolon)
+    Egs.
+        #include <iostream>
+        #define identifier
+    These directives tell the preprocessor to perform specific particular text manipulation tasks.
+The output of the preprocessor goes through several more translation phases and then is compiled.
+Note that the preprocessor does not modify the original code files in any way.
+

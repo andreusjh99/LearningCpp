@@ -1,15 +1,21 @@
 // 3. Strings
 
 #include <iostream>
-using namespace std;
+// using namespace std;
 
-int main() {
-	string text1 = "Hello ";
-	string text2 = "World";
+int main()
+{
+	std::string text1 = "Hello ";
+	std::string text2 = "World";
 
-	cout << text1 + text2 << endl; //concatenate 2 string objects
+	std::cout << text1 + text2 << std::endl; //concatenate 2 string objects
 
-	//note: + doesnt work for different object types (string + int for eg)
-	
+	//note: unlike Python, + doesnt work for different object types
+	// cout << text1 + 4 << endl; // will give an error
+
+	std::cout << "Hello "
+				 "world"
+			  << std::endl;
+
 	return 0;
 }
