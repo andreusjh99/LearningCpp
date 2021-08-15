@@ -1,0 +1,34 @@
+This section concerns the timing of C++ programs (or parts of it).
+
+There are commonly two metrics we use: "wall time" and "CPU time".
+Wall time:
+    - refers to the "wall clock time".\
+    - This is simply the total time elapsed during the measurement.
+    - as if you measured using a stopwatch
+CPU time:
+    - The time the CPU was busy processing the program's instructions.
+
+There are several methods to time. 
+    Some of them measure both wall and CPU times, some of them only measure one.
+    Some of them are OS-dependent.
+    In this tutorial, we will focus on those that work on Linux.
+
+source: https://levelup.gitconnected.com/8-ways-to-measure-execution-time-in-c-c-48634458d0f9
+
+Method 1: time
+-----------------------
+- Only on Linux
+- Measures both wall and CPU times
+- Only measures time for entire program.
+
+This is not really C/C++ code.
+Just write "time" before the command to run the program.
+For eg.
+    $ time ./MyProgram
+
+Output:
+    real 0m5.931s
+    user 0m5.926s
+    sys 0m0.005s
+
+"real" means wall time and "user" means CPU time.
