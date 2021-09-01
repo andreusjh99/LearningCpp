@@ -14,13 +14,14 @@ Complexity of std::sort : nlogn
 // - For arrays allocated through heap memory, they need to deallocated explicitly; for vectors you don't have to.
 
 std::vector<std::int> a;
+std::vector<std::int> b(10); // create a vector with a starting size of 10
 a.size(); // gives the length of the vector.
 a.push_back(1); // adds the int 1 to the end of the vector.
 i = a.begin(); // i is the position of the first element of a
 j = a.end(); // pos of last element of a
 
 std::int b = a[0];
-sort(a.begin(), a.end());
+std::sort(a.begin(), a.end());
 
 // create a vector of repeated elements
 std::vector<std::int> c(5, 1); // creates a vector of 5 ones.
@@ -100,6 +101,71 @@ std::cout << que1.back() << std::endl; // last element in queue.
 que1.push_back(1); // add element to end.
 que1.pop_front(); // remove the first element
 
+
+//----------------------------------------------------------------------
+// Initialising array with values
+Use ()
+
+char a = new char[10]()
+
+This is value initialisation of an array.
+
+
+//----------------------------------------------------------------------
+// Operation between two valid data types
+Eg. addition between an unsigned int and an int
+When there is an operation between two data types, the "lower" data type will be promoted to the "higher" data type.
+So
+	25u - 50
+	=> 25u - 50u
+
+char will be promoted to int (note that char is valid from 0 to 255)
+
+//----------------------------------------------------------------------
+// i++ vs ++i (and i-- vs --i)
+If the unary operators (++ and --) is after the variable, the variable is used first before modified.
+If the operators precede the variable, the variable is modified first then only used.
+
+So,
+	int i = 5;
+	int j = i++;
+	=> i = 6, j = 5
+
+	int i = 5;
+	int j = ++i;
+	=> i = 6, j = 6
+
+In a for loop:
+	for (int i = 0; i < 100; i++){...} vs for (int i = 0; i < 100; ++i){...}
+
+	They essentially do the same thing, but from a performance standpoint, ++i is better.
+	The post-increment operator will create a copy before incrementing and return the incremented copy,
+		so it is more expensive.
+	
+	
+
+//----------------------------------------------------------------------
+// Class vs struct
+Only difference is the access modifiers. Class members by default are private while struct members are by default public.
+When to use class vs struct?
+Good practice:
+	Use class when you need an object with methods.
+	Use struct when you need a simple data object.
+
+//----------------------------------------------------------------------
+// Check if a class is derived from another class
+use std::is_base_of<A, B>
+
+	class A {};
+	class B : A {};
+
+	int main() {
+
+		std::cout << std::is_base_of<A, B>::value << std::endl; // true
+		std::cout << std::is_base_of<B, A>::value << std::endl; // false
+
+		return 0;
+	}
 
 //----------------------------------------------------------------------
 // Member Access Control
